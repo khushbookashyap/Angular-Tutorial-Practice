@@ -5,6 +5,7 @@ import { THROW_IF_NOT_FOUND } from '@angular/core/src/di/injector';
 @Component({
   selector: 'app-employee-list',
   template: `
+  <h2> employee list </h2>
       <ul *ngFor = "let employee of Employee">
       <li> {{employee.name}} </li>
       </ul> 
@@ -15,11 +16,11 @@ import { THROW_IF_NOT_FOUND } from '@angular/core/src/di/injector';
 export class EmployeeListComponent implements OnInit {
 
   public Employee = [];
-  constructor(private _varEmployee :EmployeeServiceService) {}
+  constructor(private _employeeList :EmployeeServiceService) {}
    
 
   ngOnInit() {
-    this.Employee = this._varEmployee.getEmployees();
+    this.Employee = this._employeeList.getEmployees();
   }
 
 }
