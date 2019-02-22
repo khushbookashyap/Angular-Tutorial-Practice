@@ -6,6 +6,7 @@ import { TestComponent } from './test/test.component';
 import { EmployeeDetailComponent } from './employee-detail/employee-detail.component';
 import { EmployeeListComponent } from './employee-list/employee-list.component';
 import { EmployeeServiceService } from './employee-service.service';
+import {HttpClientModule} from '@angular/common/http';
 
 @NgModule({
   declarations: [
@@ -15,7 +16,8 @@ import { EmployeeServiceService } from './employee-service.service';
     EmployeeListComponent
   ],
   imports: [
-    BrowserModule
+    BrowserModule,
+    HttpClientModule
   ],
   providers: [EmployeeServiceService],
   bootstrap: [AppComponent]
