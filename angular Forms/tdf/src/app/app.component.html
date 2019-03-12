@@ -2,6 +2,7 @@
 <h1>Bootcamp Enrollment</h1>
 <form #userForm = "ngForm">
 
+  {{userForm.valid}}
   {{userForm.value | json}} <!--this is to show the bindidng using ngForm-->
 
 <hr />
@@ -11,6 +12,7 @@
 <div class = "form-group">
   <label>Name</label>
   <input type = "text" required class = "form-control" #name name = "userName" [(ngModel)] ="userModel.userName">
+  
 </div>
 
 {{name.className}}
@@ -19,21 +21,29 @@
 
 <div class = "form-group">
   <label>Email</label>
-  <input type = "text"  class = "form-control" name = "email" [(ngModel)] = "userModel.email">
+  <input type = "text"  required  [class.is-invalid] = "email.invalid && email.touched" class = "form-control" #email = "ngModel" name = "email" [(ngModel)] = "userModel.email">
+  <small class= "text-danger" [class.d-none] = "email.valid && email.untouched" >email is required</small>
 </div>
 
 <div class = "form-group">
   <label>Contact</label>
-  <input type = "tel" #phone = "ngModel" pattern = "^\d{10}$" [class.is-invalid] = "phone.invalid && phone.touched" class = "form-control" name ="phone"  [ngModel] = "userModel.phone">
+  <input type = "tel" required #phone = "ngModel" pattern = "^\d{10}$" [class.is-invalid] = "phone.invalid && phone.touched" class = "form-control" name ="phone"  [ngModel] = "userModel.phone">
+  <div *ngIf = "phone.errors && (phone.invalid || phone.touched)">
+  <small class = "text-danger" *ngIf = "phone.errors.pattern">The phone number should be of 10 digits</small>
+  <small class = "text-danger" *ngIf = "phone.errors.required">The phone number is required</small>
+  </div>
 </div>
 
 {{phone.untouched}} {{phone.dirty}} {{phone.valid}}
 
 <div class = "form-group">
-  <select class="custom-select" name ="choice" [ngModel] = "userModel.choice">
-    <option selected>I am interested in</option>
+  <select (blur) = "validateTopic(choice.value)" (change) = "validateTopic(choice.value)" class="custom-select" name ="choice" #choice= "ngModel" [ngModel] = "userModel.choice" [class.is-invalid]="topichasError && choice.touched">
+    <option value = "default" selected>I am interested in</option>
     <option *ngFor = "let topic of topics">{{topic}}</option>
+    
   </select>
+     
+      <small class = "text-danger" [class.d-none] = "(!topichasError || choice.untouched) ">please choose a topic</small>
 </div>
 
 <div class = "mb-3">
@@ -54,7 +64,7 @@
   <label >Send me promotional offers</label>
 </div>
 
-<button class="btn btn-primary" type = "submit">Submit</button>
+<button class="btn btn-primary" [disabled] = "userForm.form.invalid || topichasError" type = "submit">Submit</button>
 
 </form>
 
