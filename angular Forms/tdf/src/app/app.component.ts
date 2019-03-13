@@ -1,7 +1,5 @@
 import { Component } from '@angular/core';
 import { User } from './user';
-import { EnrollmentService } from './enrollment.service';
-
 
 @Component({
   selector: 'app-root',
@@ -11,7 +9,6 @@ import { EnrollmentService } from './enrollment.service';
 export class AppComponent {
   topics =['angular','react','java'];
   topichasError = true; 
-  errorMsg ='';
 
   public userModel = new User('Khushboo','khushboo@tcs.com',9999999999,'default','morning',true);
 
@@ -21,17 +18,6 @@ export class AppComponent {
     this.topichasError = true;
     }
     else this.topichasError = false;
-  }
-
-  constructor(private _enrollmentService : EnrollmentService)
-  {}
-
-  onSubmit()
-  {
-   this._enrollmentService.enroll(this.userModel)
-     .subscribe(data => console.log("success!",data),
-     error => this.errorMsg = error.statusText
-     )
 
   }
 }

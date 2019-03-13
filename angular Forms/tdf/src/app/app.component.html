@@ -1,14 +1,23 @@
 <div class= "container-fluid">
 <h1>Bootcamp Enrollment</h1>
-<div alert alert-danger *ngIf = "errorMsg" >
-  {{errorMsg}
-</div>
-<form #userForm = "ngForm" novalidate (ngSubmit) = "onSubmit()">
+<form #userForm = "ngForm">
+
+  {{userForm.valid}}
+  {{userForm.value | json}} <!--this is to show the bindidng using ngForm-->
+
+<hr />
+
+{{userModel | json}} <!--this is to show user defined user model-->
   
 <div class = "form-group">
   <label>Name</label>
   <input type = "text" required class = "form-control" #name name = "userName" [(ngModel)] ="userModel.userName">
+  
 </div>
+
+{{name.className}}
+
+
 
 <div class = "form-group">
   <label>Email</label>
@@ -24,6 +33,8 @@
   <small class = "text-danger" *ngIf = "phone.errors.required">The phone number is required</small>
   </div>
 </div>
+
+{{phone.untouched}} {{phone.dirty}} {{phone.valid}}
 
 <div class = "form-group">
   <select (blur) = "validateTopic(choice.value)" (change) = "validateTopic(choice.value)" class="custom-select" name ="choice" #choice= "ngModel" [ngModel] = "userModel.choice" [class.is-invalid]="topichasError && choice.touched">
